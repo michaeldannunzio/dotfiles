@@ -1,0 +1,14 @@
+alias exa = "exa \
+              --classify \
+              --all \
+              --header \
+              --long \
+              --group \
+              --tree \
+              --level=1 \
+              --group-directories-first \
+              --ignore-glob=.git"
+
+alias update = "sudo softwareupdate -i -a; \
+                brew update; brew upgrade; brew cleanup; \
+                npm install -g npm;"

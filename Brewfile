@@ -5,6 +5,8 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@1.1"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Clone of cat(1) with syntax highlighting and Git integration
@@ -13,6 +15,8 @@ brew "bat"
 brew "calc"
 # C++ interpreter
 brew "cling"
+# Cross-platform make
+brew "cmake"
 # Parallels Driver for Docker Machine
 brew "docker-machine-parallels"
 # .NET Core
@@ -39,20 +43,24 @@ brew "glide"
 brew "gtk+3"
 # Improved top (interactive process viewer)
 brew "htop"
-# Next-gen compiler infrastructure
-brew "llvm"
 # List USB devices, just like the Linux lsusb command
 brew "lsusb"
 # Port scanning utility for large networks
 brew "nmap"
+# Trigger notifications when a process completes
+brew "noti"
 # Manage multiple Node.js versions
 brew "nvm"
 # Development kit for the Java programming language
 brew "openjdk"
+# OpenBSD freely-licensed SSH connectivity tools
+brew "openssh"
 # GNOME Python bindings (based on GObject Introspection)
 brew "pygobject3"
 # Command-line interface for https://speedtest.net bandwidth tests
 brew "speedtest-cli"
+# Simplified and community-driven man pages
+brew "tldr"
 # Command-line interface to the freedesktop.org trashcan
 brew "trash-cli"
 # Language for application scale JavaScript development
@@ -68,9 +76,10 @@ cask "anaconda"
 cask "android-studio"
 # Two-factor authentication software
 cask "authy"
-cask "background-music"
 # Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
+cask "caldigit-docking-utility"
+cask "caldigit-thunderbolt-charging"
 # Browser for SQLite databases
 cask "db-browser-for-sqlite"
 # Voice and text chat software
@@ -122,6 +131,8 @@ cask "skype"
 cask "slack"
 # Application to control your PlayStation 4
 cask "sony-ps4-remote-play"
+# Sound and audio controller
+cask "soundsource"
 # Music streaming service
 cask "spotify"
 # Temperature monitoring, fan control and diagnostics
