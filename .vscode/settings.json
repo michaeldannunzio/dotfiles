@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    ".aliases": "shellscript",
+    ".apps": "shellscript",
+    ".exports": "shellscript",
+    ".functions": "shellscript",
+    ".macos": "shellscript",
+    ".packages": "shellscript",
+    ".profile": "shellscript",
+    ".prompt": "shellscript",
+    ".zshrc": "shellscript"
+  }
+}

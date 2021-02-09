@@ -53,8 +53,6 @@ brew "noti"
 brew "nvm"
 # Development kit for the Java programming language
 brew "openjdk"
-# OpenBSD freely-licensed SSH connectivity tools
-brew "openssh"
 # GNOME Python bindings (based on GObject Introspection)
 brew "pygobject3"
 # Command-line interface for https://speedtest.net bandwidth tests
@@ -93,6 +91,8 @@ cask "firefox"
 cask "font-fira-code"
 # Desktop client for GitHub repositories
 cask "github"
+# Git client focusing on productivity
+cask "gitkraken"
 # Web browser
 cask "google-chrome"
 # Set of tools to manage resources and applications hosted on Google Cloud
