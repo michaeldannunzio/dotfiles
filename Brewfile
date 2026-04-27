@@ -1,145 +1,299 @@
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/cask-drivers"
-tap "homebrew/cask-fonts"
-tap "homebrew/cask-versions"
-tap "homebrew/core"
-tap "homebrew/services"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@1.1"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.9"
-# Clone of cat(1) with syntax highlighting and Git integration
+brew "openssl@3"
+brew "readline"
+brew "sqlite"
+brew "xz"
+brew "azure-cli"
 brew "bat"
-# Arbitrary precision calculator
-brew "calc"
-# C++ interpreter
-brew "cling"
-# Cross-platform make
-brew "cmake"
-# Parallels Driver for Docker Machine
-brew "docker-machine-parallels"
-# .NET Core
-brew "dotnet"
-# Modern replacement for 'ls'
-brew "exa"
-# Read, write, modify, and display EXIF data on the command-line
-brew "exif"
-# Perl lib for reading and writing EXIF metadata
-brew "exiftool"
-# Interactive shell for FaunaDB
-brew "fauna-shell"
-# Play, record, convert, and stream audio and video
+brew "zstd"
+brew "btop"
+brew "curl"
+brew "docker"
+brew "eza"
 brew "ffmpeg"
-# Command-line JSON processing tool
+brew "fnm"
 brew "fx"
-# GitHub command-line tool
+brew "python@3.14"
+brew "gdb"
+brew "gemini-cli"
 brew "gh"
-# Open source programming language to build simple/reliable/efficient software
+brew "git"
+brew "git-lfs"
+brew "gnupg"
 brew "go"
-# Simplified Go project management, dependency management, and vendoring
-brew "glide"
-# Toolkit for creating graphical user interfaces
-brew "gtk+3"
-# Improved top (interactive process viewer)
 brew "htop"
-# List USB devices, just like the Linux lsusb command
-brew "lsusb"
-# Port scanning utility for large networks
-brew "nmap"
-# Trigger notifications when a process completes
-brew "noti"
-# Manage multiple Node.js versions
+brew "libb2"
+brew "marp-cli"
+brew "mas"
+brew "mermaid-cli"
+brew "neovim"
 brew "nvm"
-# Development kit for the Java programming language
-brew "openjdk"
-# GNOME Python bindings (based on GObject Introspection)
-brew "pygobject3"
-# Command-line interface for https://speedtest.net bandwidth tests
-brew "speedtest-cli"
-# Simplified and community-driven man pages
-brew "tldr"
-# Command-line interface to the freedesktop.org trashcan
+brew "opencode"
+brew "pipx"
+brew "plantuml"
+brew "prettyping"
+brew "python-matplotlib"
+brew "python@3.11"
+brew "rust"
+brew "tag"
+brew "tcl-tk"
+brew "tlrc"
+brew "tmux"
 brew "trash-cli"
-# Language for application scale JavaScript development
-brew "typescript"
-# Internet file retriever
-brew "wget"
-# JavaScript package manager
-brew "yarn"
-# UNIX shell (command interpreter)
+brew "tree"
+brew "vim"
+brew "watchman"
+brew "yt-dlp"
+brew "zlib"
 brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+cask "adobe-acrobat-reader"
+cask "airtable"
+cask "alfred"
+cask "alt-tab"
 cask "anaconda"
-# Tools for building Android applications
-cask "android-studio"
-# Two-factor authentication software
-cask "authy"
-# Tool to flash OS images to SD cards & USB drives
-cask "balenaetcher"
-cask "caldigit-docking-utility"
-cask "caldigit-thunderbolt-charging"
-# Browser for SQLite databases
-cask "db-browser-for-sqlite"
-# Voice and text chat software
+cask "background-music"
+cask "bartender"
+cask "betterdisplay"
+cask "bettertouchtool"
+cask "blackhole-16ch"
+cask "blackhole-2ch"
+cask "blackhole-64ch"
+cask "chatgpt"
+cask "claude"
+cask "claude-code"
+cask "claude-devtools"
+cask "cleanmymac"
+cask "codex"
+cask "commander-one"
+cask "copilot-cli"
+cask "cork"
+cask "cursor"
+cask "cursor-cli"
+cask "dash"
 cask "discord"
-# App to build and share containerized applications and microservices
-cask "docker"
-# Draw.io is free online diagram software
+cask "displaybuddy"
+cask "docker-desktop"
 cask "drawio"
-# Web browser
-cask "firefox"
+cask "elmedia-player"
+cask "excalidrawz"
+cask "figma"
+cask "fman"
 cask "font-fira-code"
-# Desktop client for GitHub repositories
+cask "font-fira-code-nerd-font"
+cask "font-symbols-only-nerd-font"
+cask "forklift"
+cask "gemini"
+cask "ghostty"
+cask "git-credential-manager"
 cask "github"
-# Git client focusing on productivity
-cask "gitkraken"
-# Web browser
 cask "google-chrome"
-# Set of tools to manage resources and applications hosted on Google Cloud
-cask "google-cloud-sdk"
-cask "google-drive-file-stream"
-# System monitoring app
+cask "google-drive"
+cask "google-gemini"
+cask "iina"
 cask "istat-menus"
-# Terminal emulator as alternative to Apple's Terminal app
 cask "iterm2"
-# Provides updates to various Microsoft products
+cask "itermai"
+cask "itermbrowserplugin"
+cask "keycastr"
+cask "launchos"
 cask "microsoft-auto-update"
-cask "microsoft-office"
+cask "microsoft-excel"
+cask "microsoft-outlook"
+cask "microsoft-powerpoint"
 cask "microsoft-teams"
-# Tool to scan and monitor the network
-cask "network-radar"
-# Desktop virtualization software
-cask "parallels"
-cask "parallels-access"
-cask "parallels-client"
-# Bundle with over 30 tools
-cask "parallels-toolbox"
-# Desktop virtualization development kit
-cask "parallels-virtualization-sdk"
-# Collaboration platform for API development
+cask "microsoft-word"
+cask "miro"
+cask "monitorcontrol"
+cask "ngrok"
+cask "nordvpn"
+cask "notion"
+cask "obs"
+cask "obsidian"
+cask "ollama-app"
+cask "one-switch"
+cask "onedrive"
+cask "path-finder"
+cask "plex-media-server"
 cask "postman"
-# Environment for statistical computing and graphics
-cask "r"
-cask "raspberry-pi-imager"
-# Safari version of the Refined Github extension
-cask "refined-github-safari"
-# Collection of apps available by subscription
-cask "setapp"
-# Video chat, voice call and instant messaging application
-cask "skype"
-# Team communication and collaboration software
+cask "raycast"
 cask "slack"
-# Application to control your PlayStation 4
-cask "sony-ps4-remote-play"
-# Sound and audio controller
-cask "soundsource"
-# Music streaming service
 cask "spotify"
-# Temperature monitoring, fan control and diagnostics
-cask "tg-pro"
-# Tool to hide menu bar icons
-cask "vanilla"
-# Open-source code editor
+cask "syntax-highlight"
+cask "telegram-desktop"
 cask "visual-studio-code"
-# Video communication and virtual meeting platform
-cask "zoom"
+cask "whatsapp"
+cask "wireshark-app"
+mas "Actions", id: 1586435171
+mas "Actions For Obsidian", id: 1659667937
+mas "AdBlock Pro", id: 1018301773
+mas "Cookie-Editor", id: 6446215341
+mas "Developer", id: 640199958
+mas "DS_Store Inspector", id: 6758286374
+mas "HP", id: 1474276998
+mas "Instapaper", id: 288545208
+mas "JSON Peep", id: 1458969831
+mas "Kindle", id: 302584613
+mas "Logger", id: 1611554653
+mas "Magnet", id: 441258766
+mas "MenuBox", id: 6463440793
+mas "Night Sky", id: 475772902
+mas "Obsidian Web Clipper", id: 6720708363
+mas "Pasteboard Viewer", id: 1499215709
+mas "Photomator", id: 1444636541
+mas "Postman Interceptor", id: 6460587883
+mas "Prime Video", id: 545519333
+mas "Randa", id: 1589044499
+mas "Raycast Companion", id: 6738274497
+mas "Refined GitHub", id: 1519867270
+mas "Shazam", id: 897118787
+mas "Simple Color Palette", id: 6744484427
+mas "Swift Playground", id: 1496833156
+mas "Userscripts", id: 1463298887
+mas "Vimari", id: 1480933944
+mas "Xcode", id: 497799835
+vscode "42crunch.vscode-openapi"
+vscode "aaron-bond.better-comments"
+vscode "adpyke.codesnap"
+vscode "ahmadawais.shades-of-purple"
+vscode "akamud.vscode-theme-onedark"
+vscode "akamud.vscode-theme-onelight"
+vscode "alefragnani.bookmarks"
+vscode "alefragnani.project-manager"
+vscode "anseki.vscode-color"
+vscode "anthropic.claude-code"
+vscode "anthropic.url-content-opener"
+vscode "arjun.swagger-viewer"
+vscode "azemoh.one-monokai"
+vscode "bierner.github-markdown-preview"
+vscode "bierner.markdown-checkbox"
+vscode "bierner.markdown-emoji"
+vscode "bierner.markdown-footnotes"
+vscode "bierner.markdown-mermaid"
+vscode "bierner.markdown-preview-github-styles"
+vscode "bierner.markdown-yaml-preamble"
+vscode "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
+vscode "bradlc.vscode-tailwindcss"
+vscode "christian-kohler.npm-intellisense"
+vscode "christian-kohler.path-intellisense"
+vscode "codezombiech.gitignore"
+vscode "cs50.vscode-presentation-mode"
+vscode "cucumberopen.cucumber-official"
+vscode "davidanson.vscode-markdownlint"
+vscode "dbaeumer.vscode-eslint"
+vscode "diemasmichiels.emulate"
+vscode "dnicolson.binary-plist"
+vscode "docker.docker"
+vscode "docsmsft.docs-article-templates"
+vscode "docsmsft.docs-authoring-pack"
+vscode "docsmsft.docs-images"
+vscode "docsmsft.docs-markdown"
+vscode "docsmsft.docs-preview"
+vscode "docsmsft.docs-scaffolding"
+vscode "docsmsft.docs-yaml"
+vscode "dotenv.dotenv-vscode"
+vscode "dotjoshjohnson.xml"
+vscode "dracula-theme.theme-dracula"
+vscode "eamodio.gitlens"
+vscode "ecmel.vscode-html-css"
+vscode "editorconfig.editorconfig"
+vscode "eliverlara.andromeda"
+vscode "emmanuelbeziat.vscode-great-icons"
+vscode "enkia.tokyo-night"
+vscode "esbenp.prettier-vscode"
+vscode "file-icons.file-icons"
+vscode "firefox-devtools.vscode-firefox-debug"
+vscode "formulahendry.auto-close-tag"
+vscode "formulahendry.auto-rename-tag"
+vscode "formulahendry.code-runner"
+vscode "github.codespaces"
+vscode "github.copilot-chat"
+vscode "github.github-vscode-theme"
+vscode "github.vscode-codeql"
+vscode "github.vscode-pull-request-github"
+vscode "golang.go"
+vscode "grapecity.gc-excelviewer"
+vscode "gruntfuggly.todo-tree"
+vscode "hbenl.vscode-test-explorer"
+vscode "ibm.output-colorizer"
+vscode "ivhernandez.vscode-plist"
+vscode "jeff-hykin.better-cpp-syntax"
+vscode "jflbr.jwt-decoder"
+vscode "jock.svg"
+vscode "johnpapa.winteriscoming"
+vscode "lakefs.lakefs-dvc"
+vscode "leetcode.vscode-leetcode"
+vscode "llvm-vs-code-extensions.vscode-clangd"
+vscode "luisfontes19.vscode-swissknife"
+vscode "marp-team.marp-vscode"
+vscode "mechatroner.rainbow-csv"
+vscode "mkxml.vscode-filesize"
+vscode "mongodb.mongodb-vscode"
+vscode "monokai.theme-monokai-pro-vscode"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-azuretools.vscode-docker"
+vscode "ms-dotnettools.blazorwasm-companion"
+vscode "ms-dotnettools.csdevkit"
+vscode "ms-dotnettools.csharp"
+vscode "ms-dotnettools.vscode-dotnet-runtime"
+vscode "ms-edgedevtools.vscode-edge-devtools"
+vscode "ms-kubernetes-tools.vscode-kubernetes-tools"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode-remote.remote-ssh"
+vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode-remote.remote-wsl"
+vscode "ms-vscode-remote.vscode-remote-extensionpack"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpp-devtools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.makefile-tools"
+vscode "ms-vscode.remote-explorer"
+vscode "ms-vscode.remote-server"
+vscode "ms-vscode.test-adapter-converter"
+vscode "ms-vscode.vscode-markdown-notebook"
+vscode "ms-vscode.wordcount"
+vscode "ms-vsliveshare.vsliveshare"
+vscode "msjsdiag.vscode-react-native"
+vscode "mutantdino.resourcemonitor"
+vscode "nortakales.vs-qalc"
+vscode "oderwat.indent-rainbow"
+vscode "openai.chatgpt"
+vscode "pkief.material-icon-theme"
+vscode "pnp.polacode"
+vscode "rangav.vscode-thunder-client"
+vscode "redhat.vscode-xml"
+vscode "redhat.vscode-yaml"
+vscode "rid9.datetime"
+vscode "ritwickdey.liveserver"
+vscode "robbowen.synthwave-vscode"
+vscode "rocketseat.theme-omni"
+vscode "rust-lang.rust-analyzer"
+vscode "sdras.night-owl"
+vscode "shd101wyy.markdown-preview-enhanced"
+vscode "spmeesseman.vscode-taskexplorer"
+vscode "streetsidesoftware.code-spell-checker"
+vscode "stylelint.vscode-stylelint"
+vscode "teabyii.ayu"
+vscode "tinkertrain.theme-panda"
+vscode "tomoki1207.pdf"
+vscode "vincaslt.highlight-matching-tag"
+vscode "vivaxy.vscode-conventional-commits"
+vscode "vscode-icons-team.vscode-icons"
+vscode "wayou.vscode-todo-highlight"
+vscode "wesbos.theme-cobalt2"
+vscode "whizkydee.material-palenight-theme"
+vscode "wix.vscode-import-cost"
+vscode "yzane.markdown-pdf"
+vscode "yzhang.markdown-all-in-one"
+vscode "zainchen.json"
+vscode "zhuangtongfa.material-theme"
+go "golang.org/x/tools/gopls"
