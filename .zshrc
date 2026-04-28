@@ -140,15 +140,15 @@ export HOMEBREW_EVAL_ALL=1
 export HOMEBREW_NO_AUTOREMOVE=1
 export HOMEBREW_API_AUTO_UPDATE_SECS=3600
 export HOMEBREW_BAT=1
-# export HOMEBREW_BAT_CONFIG_PATH=""
-# export HOMEBREW_DOCKER_REGISTRY_BASIC_AUTH_TOKEN=""
-# export HOMEBREW_DOCKER_REGISTRY_TOKEN=""
-# export HOMEBREW_GIT_EMAIL=""
-# export HOMEBREW_GIT_NAME=""
-# export HOMEBREW_GITHUB_API_TOKEN=""
-# export HOMEBREW_GITHUB_PACKAGES_TOKEN=""
-# export HOMEBREW_GITHUB_PACKAGES_USER=""
-# export HOMEBREW_SSH_CONFIG_PATH=""
+# export HOMEBREW_BAT_CONFIG_PATH="" 			# TODO:
+# export HOMEBREW_DOCKER_REGISTRY_BASIC_AUTH_TOKEN="" 	# TODO:
+# export HOMEBREW_DOCKER_REGISTRY_TOKEN="" 		# TODO:
+# export HOMEBREW_GIT_EMAIL="" 				# TODO:
+# export HOMEBREW_GIT_NAME="" 				# TODO:
+# export HOMEBREW_GITHUB_API_TOKEN="" 			# TODO:
+# export HOMEBREW_GITHUB_PACKAGES_TOKEN="" 		# TODO:
+# export HOMEBREW_GITHUB_PACKAGES_USER="" 		# TODO:
+# export HOMEBREW_SSH_CONFIG_PATH="" 			# TODO:
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/michaeldannunzio/.docker/completions $fpath)
 autoload -Uz compinit
