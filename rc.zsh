@@ -181,3 +181,13 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
+
+if command -v ngrok &>/dev/null; then
+	eval "$(ngrok completion)"
+fi
+
+alias python="python3"
+alias pip="pip3"
+
+
+export GPG_TTY=$(tty)
