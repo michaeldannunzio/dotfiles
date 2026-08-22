@@ -1,0 +1,5 @@
+# COPR repos to enable, then the packages to take from them.
+# Format: <owner>/<project> <package> [more packages...]
+# Ghostty COPR is the one named in the official Ghostty docs:
+# https://ghostty.org/docs/install/binary
+scottames/ghostty ghostty

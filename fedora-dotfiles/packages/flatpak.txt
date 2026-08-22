@@ -1,0 +1,12 @@
+# Flathub application IDs, one per line.
+# The installer checks each ID against Flathub first and logs any it cannot find.
+md.obsidian.Obsidian
+com.discordapp.Discord
+com.getpostman.Postman
+com.jgraph.drawio.desktop
+com.obsproject.Studio
+org.wireshark.Wireshark
+io.github.shiftey.Desktop
+com.github.IsmaelMartinez.teams_for_linux
+com.spotify.Client
+com.mattjakeman.ExtensionManager

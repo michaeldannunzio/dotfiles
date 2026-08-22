@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nix Setup Guide: MacBook Pro M2</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    max-width: 46rem; margin: 0 auto; padding: 1.5rem;
+  }
+  h1 { font-size: 1.6rem; margin-bottom: 0.2rem; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; border-bottom: 1px solid #8883; padding-bottom: 0.3rem; }
+  h3 { font-size: 1rem; margin-top: 1.4rem; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; }
+  pre { background: #8881; padding: 0.8rem; border-radius: 6px; overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid #8883; vertical-align: top; }
+  .warn { border-left: 4px solid #c93; background: #c9310; padding: 0.7rem 0.9rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  ol > li, ul > li { margin: 0.35rem 0; }
+</style>
+</head>
+<body>
+
+<h1>Nix Setup Guide</h1>
+<p>MacBook Pro M2, plus Linux desktops, remote servers, and a work Mac.</p>
+
+<h2>Repository layout</h2>
+<p>This configuration lives in <code>nix-config/</code> of the dotfiles repository. Clone it, or symlink that directory to <code>~/.config/nix-config</code>:</p>
+<pre>nix-config/
+  flake.nix
+  .gitignore
+  hosts/mbp-personal/default.nix
+  hosts/mbp-work/default.nix
+  hosts/linux-desktop/default.nix
+  hosts/linux-desktop/hardware-configuration.nix   (generated on the machine)
+  modules/darwin/defaults.nix
+  modules/darwin/homebrew.nix
+  home/core.nix
+  home/darwin.nix
+  home/linux.nix
+  templates/devshell/flake.nix
+  templates/devshell/.envrc
+  docs/SETUP-GUIDE.html</pre>
+
+<h2>Before you start</h2>
+
+<div class="warn">
+  <p><strong>Capture your current macOS settings first.</strong> You changed them by hand after the reset. If you do not record them now, you must find them again later.</p>
+  <pre>defaults read &gt; ~/baseline-defaults.txt
+defaults -currentHost read &gt; ~/baseline-currenthost.txt</pre>
+</div>
+
+<div class="warn">
+  <p><strong>Nix creates a <code>/nix</code> APFS volume.</strong> Removal is difficult. Decide now if you accept that.</p>
+</div>
+
+<h2>Step 1. Install the prerequisites</h2>
+
+<ol>
+  <li>Install the Xcode command line tools:
+    <pre>xcode-select --install</pre>
+  </li>
+  <li>Install Nix. The nix-darwin project recommends the Lix installer, because it includes an uninstaller. See
+    <a href="https://lix.systems/install/">lix.systems/install</a>.</li>
+  <li>Install Homebrew. Nix does not package macOS GUI apps well, so Homebrew supplies the casks:
+    <pre>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
+  </li>
+  <li>Open a new terminal window, so the shell finds the new commands.</li>
+</ol>
+
+<h2>Step 2. Prepare the repository</h2>
+
+<ol>
+  <li>Point <code>~/.config/nix-config</code> at the <code>nix-config/</code> directory of this repository.</li>
+  <li>Edit the three lines at the top of <code>flake.nix</code>:
+    <pre>username = "CHANGE_ME";
+fullName = "CHANGE ME";
+email   = "changeme@example.com";</pre>
+  </li>
+  <li>Set the hostname of the Mac, so it matches the configuration name:
+    <pre>sudo scutil --set LocalHostName mbp-personal</pre>
+  </li>
+  <li>Start the git history. Nix flakes only read files that git tracks:
+    <pre>cd ~/.config/nix-config
+git init
+git add -A
+git commit -m "initial config"</pre>
+  </li>
+</ol>
+
+<h2>Step 3. First build</h2>
+
+<pre>cd ~/.config/nix-config
+sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- \
+  switch --flake .#mbp-personal</pre>
+
+<p>After this build, all later changes use the short command:</p>
+
+<pre>sudo darwin-rebuild switch --flake ~/.config/nix-config#mbp-personal</pre>
+
+<div class="warn">
+  <p>The first build fails if <code>homebrew.enable</code> is true and Homebrew is absent. Install Homebrew first, or comment out the import of <code>modules/darwin/homebrew.nix</code>.</p>
+</div>
+
+<h2>Step 4. Daily use</h2>
+
+<table>
+  <tr><th>Task</th><th>Command</th></tr>
+  <tr><td>Apply a change</td><td><code>sudo darwin-rebuild switch --flake .#mbp-personal</code></td></tr>
+  <tr><td>Test without applying</td><td><code>darwin-rebuild build --flake .#mbp-personal</code></td></tr>
+  <tr><td>Update all inputs</td><td><code>nix flake update</code></td></tr>
+  <tr><td>Update one input</td><td><code>nix flake update nixpkgs</code></td></tr>
+  <tr><td>Go back one generation</td><td><code>sudo darwin-rebuild --rollback</code></td></tr>
+  <tr><td>Free disk space</td><td><code>nix-collect-garbage -d</code></td></tr>
+  <tr><td>Find a package</td><td><code>nix search nixpkgs ripgrep</code></td></tr>
+</table>
+
+<h2>Step 5. Per project toolchains</h2>
+
+<p>Do not install Node, Python, Go, or Rust into your user profile. Each project carries its own versions.</p>
+
+<ol>
+  <li>Copy <code>templates/devshell/flake.nix</code> and <code>templates/devshell/.envrc</code> into the project.</li>
+  <li>Delete the language sections you do not need.</li>
+  <li>Run <code>direnv allow</code> once.</li>
+</ol>
+
+<p>direnv now loads the correct tools when you enter the directory, and unloads them when you leave.</p>
+
+<h3>Swift and iOS</h3>
+<p>Xcode is the exception. Nix cannot supply it. Install Xcode from the App Store, then run:</p>
+<pre>sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -license accept</pre>
+
+<h2>Step 6. Add the other machines</h2>
+
+<h3>Work Mac</h3>
+<ol>
+  <li>Set its hostname to <code>mbp-work</code>.</li>
+  <li>Clone the repo and build <code>.#mbp-work</code>.</li>
+</ol>
+
+<h3>Linux desktop</h3>
+<ol>
+  <li>On the machine, run:
+    <pre>sudo nixos-generate-config --show-hardware-config \
+  &gt; hosts/linux-desktop/hardware-configuration.nix</pre>
+  </li>
+  <li>Remove the comment markers from the <code>nixosConfigurations</code> block in <code>flake.nix</code>.</li>
+  <li>Build with <code>sudo nixos-rebuild switch --flake .#linux-desktop</code>.</li>
+</ol>
+
+<h3>Remote servers</h3>
+<p>Servers get user level configuration only. No root is needed.</p>
+<pre>nix run home-manager/release-26.05 -- switch --flake .#server</pre>
+
+<h2>Where each setting belongs</h2>
+
+<table>
+  <tr><th>Item</th><th>File</th></tr>
+  <tr><td>macOS settings, Dock, keyboard</td><td><code>modules/darwin/defaults.nix</code></td></tr>
+  <tr><td>GUI apps and App Store apps</td><td><code>modules/darwin/homebrew.nix</code></td></tr>
+  <tr><td>Shell, git, editor, CLI tools</td><td><code>home/core.nix</code></td></tr>
+  <tr><td>Mac only user tools</td><td><code>home/darwin.nix</code></td></tr>
+  <tr><td>Linux only user tools</td><td><code>home/linux.nix</code></td></tr>
+  <tr><td>One machine only</td><td><code>hosts/&lt;name&gt;/default.nix</code></td></tr>
+  <tr><td>Project languages</td><td>the project <code>flake.nix</code></td></tr>
+</table>
+
+<h2>Secrets</h2>
+<p>Never write a plain secret into a Nix file. Nix copies flake files into the world readable store. The <code>sops-nix</code> input is already present in <code>flake.nix</code>. Use it with an <code>age</code> key when you are ready.</p>
+
+<h2>Order of work</h2>
+<ol>
+  <li>Get the Mac to build and switch with a small configuration.</li>
+  <li>Add your macOS settings, one at a time, and confirm each one with the <code>defaults read</code> diff.</li>
+  <li>Add the GUI apps as casks.</li>
+  <li>Move your shell and git configuration into <code>home/core.nix</code>.</li>
+  <li>Add devshells to your projects.</li>
+  <li>Only then add the other machines.</li>
+</ol>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://github.com/nix-darwin/nix-darwin">nix-darwin repository</a></li>
+  <li><a href="https://nix-darwin.github.io/nix-darwin/manual/index.html">nix-darwin option reference</a></li>
+  <li><a href="https://nix-community.github.io/home-manager/options.xhtml">home-manager option reference</a></li>
+  <li><a href="https://search.nixos.org/packages">Nixpkgs package search</a></li>
+</ul>
+
+</body>
+</html>

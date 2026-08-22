@@ -1,16 +1,23 @@
-# Compiled Python files
-*.pyc
+# Repository-wide safety net. Each layer also carries its own .gitignore.
 
-# Folder view configuration files
+# Never commit private keys or secrets
+*.pem
+*.key
+id_*
+!id_*.pub
+.ssh/
+
+# Nix build output and direnv state
+result
+result-*
+.direnv/
+*.hm-bak
+
+# Local machine output
+baseline/
+*.bak
+*.log
+
+# OS cruft
 .DS_Store
-Desktop.ini
-
-# Thumbnail cache files
-._*
-Thumbs.db
-
-# Files that might appear on external disks
-.Spotlight-V100
-.Trashes
-
-.config/
+*.swp

@@ -1,0 +1,3 @@
+# Go tools installed with "go install". Use the full module path and a version.
+# Example:
+# github.com/jesseduffield/lazygit@latest

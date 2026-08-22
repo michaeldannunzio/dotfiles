@@ -1,0 +1,31 @@
+# SSH client configuration for the Windows host.
+# Repo path: dotfiles\ssh-config
+# Linked to: %USERPROFILE%\.ssh\config
+#
+# Private keys stay in %USERPROFILE%\.ssh and are never committed.
+# Load them into the Windows agent once:
+#   Get-Service ssh-agent | Set-Service -StartupType Automatic
+#   Start-Service ssh-agent
+#   ssh-add $env:USERPROFILE\.ssh\id_ed25519
+
+Host *
+	AddKeysToAgent yes
+	ServerAliveInterval 60
+	ServerAliveCountMax 3
+
+Host github.com
+	User git
+	IdentityFile ~/.ssh/id_ed25519
+	IdentitiesOnly yes
+
+# The MacBook, over Tailscale. Replace the host name with yours.
+Host mbp
+	HostName mbp-personal.your-tailnet.ts.net
+	User CHANGE_ME
+	IdentityFile ~/.ssh/id_ed25519
+
+# The Fedora side of the dual boot, if you build it.
+Host fedora
+	HostName fedora-desktop.your-tailnet.ts.net
+	User CHANGE_ME
+	IdentityFile ~/.ssh/id_ed25519

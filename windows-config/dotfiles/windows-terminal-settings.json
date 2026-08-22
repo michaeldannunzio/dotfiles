@@ -1,0 +1,54 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "copyOnSelect": true,
+    "copyFormatting": "none",
+    "initialCols": 140,
+    "initialRows": 40,
+    "theme": "dark",
+    "useAcrylicInTabRow": false,
+
+    "profiles": {
+        "defaults": {
+            "colorScheme": "One Half Dark",
+            "font": {
+                "face": "CaskaydiaCove Nerd Font",
+                "size": 11
+            },
+            "padding": "10",
+            "scrollbarState": "hidden",
+            "useAcrylic": false
+        },
+        "list": [
+            {
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "name": "PowerShell",
+                "source": "Windows.Terminal.PowershellCore",
+                "startingDirectory": "%USERPROFILE%"
+            },
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "name": "Ubuntu",
+                "source": "Windows.Terminal.Wsl",
+                "startingDirectory": "\\\\wsl$\\Ubuntu\\home\\CHANGE_ME"
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "name": "Command Prompt",
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "hidden": true
+            }
+        ]
+    },
+
+    "actions": [
+        { "command": { "action": "splitPane", "split": "right" }, "keys": "alt+shift+d" },
+        { "command": { "action": "splitPane", "split": "down" }, "keys": "alt+shift+s" },
+        { "command": "closePane", "keys": "ctrl+w" },
+        { "command": { "action": "copy", "singleLine": false }, "keys": "ctrl+c" },
+        { "command": "paste", "keys": "ctrl+v" },
+        { "command": "find", "keys": "ctrl+shift+f" }
+    ]
+}
