@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Windows Config Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e1118;
+  --paper:#f4f3ef;
+  --card:#ffffff;
+  --steel:#4a86a8;
+  --amber:#e0a03a;
+  --warn:#a8321f;
+  --text:#1c2029;
+  --muted:#5f6672;
+  --line:#ddd9d0;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--text);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  font-size:16px;line-height:1.6;
+}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px 80px}
+
+header{background:var(--ink);color:#e9e6df;border-bottom:4px solid var(--steel)}
+.masthead{max-width:820px;margin:0 auto;padding:44px 20px 34px}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--steel);margin:0 0 14px;
+}
+h1{font-size:2rem;margin:0 0 10px;font-weight:600;letter-spacing:-.01em}
+.sub{color:#a9b0bb;margin:0;font-size:.95rem}
+
+h2{font-size:1.12rem;margin:0;font-weight:600}
+h3{font-size:.95rem;margin:0 0 8px;font-weight:600}
+
+.stage{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:4px;padding:22px 24px;margin:26px 0;
+}
+.stage-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px}
+.tag{
+  font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-weight:600;
+  color:#fff;background:var(--steel);
+  padding:3px 9px;border-radius:3px;flex:none;
+}
+.code{position:relative;margin:14px 0}
+pre{
+  background:var(--ink);color:#e9e6df;margin:0;
+  padding:16px 60px 16px 16px;border-radius:4px;
+  overflow-x:auto;font-family:"IBM Plex Mono",monospace;
+  font-size:.83rem;line-height:1.55;
+}
+code{font-family:"IBM Plex Mono",monospace;font-size:.88em;background:#0001;padding:1px 5px;border-radius:3px}
+.copy{
+  position:absolute;top:10px;right:10px;
+  font-family:"IBM Plex Mono",monospace;font-size:.7rem;
+  background:#ffffff1a;color:#e9e6df;border:1px solid #ffffff33;
+  padding:4px 9px;border-radius:3px;cursor:pointer;
+}
+.copy:hover{background:#ffffff2e}
+.copy:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+.notice{border-left:3px solid var(--amber);background:#e0a03a14;padding:14px 16px;margin:16px 0;border-radius:0 4px 4px 0}
+.notice.stop{border-left-color:var(--warn);background:#a8321f12}
+
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+ul,ol{padding-left:22px}
+li{margin:.35rem 0}
+a{color:#2f6a8a}
+footer{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:.92rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead">
+    <p class="eyebrow">Runbook / Z690 desktop</p>
+    <h1>Windows config repository</h1>
+    <p class="sub">Two declarative layers: the Windows host, and WSL2 running the same Nix configuration as the MacBook.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="stage">
+  <div class="stage-head"><h2>Folder structure</h2></div>
+  <p>This layer lives in <code>windows-config/</code> of the dotfiles repository. Each file names its own repo path in its header.</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>windows-config/
+  bootstrap.ps1
+  configuration.dsc.yaml
+  .gitignore
+  debloat/Debloat.ps1
+  scripts/Export-Baseline.ps1
+  scripts/Link-Dotfiles.ps1
+  dotfiles/Microsoft.PowerShell_profile.ps1
+  dotfiles/windows-terminal-settings.json
+  dotfiles/gitconfig
+  dotfiles/ssh-config
+  wsl/Install-WSL.ps1
+  wsl/wsl-bootstrap.sh
+  docs/SETUP-GUIDE.html</pre></div>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><h2>How the two layers split</h2></div>
+  <p>Nix does not run natively on Windows. So the machine is managed by two tools, not one.</p>
+  <table>
+    <tr><th>Layer</th><th>Tool</th><th>Lives in</th></tr>
+    <tr><td>Apps, registry settings, Windows features</td><td>WinGet Configuration (DSC)</td><td><code>configuration.dsc.yaml</code></td></tr>
+    <tr><td>Store app removal</td><td>PowerShell 5.1</td><td><code>debloat/Debloat.ps1</code></td></tr>
+    <tr><td>PowerShell profile, Terminal, git, SSH</td><td>Symbolic links</td><td><code>dotfiles/</code></td></tr>
+    <tr><td>Shell, editor, dev toolchains</td><td>home-manager</td><td>your <code>nix-config</code> repo</td></tr>
+  </table>
+  <div class="notice">
+    <h3>The part you already built</h3>
+    <p>Your <code>nix-config</code> flake has a <code>homeConfigurations."server"</code> output. WSL2 is Linux, so it uses that output unchanged. Your shell, git, neovim, direnv, and aliases become identical on the Mac and the PC. The Fedora dual boot uses the same output later.</p>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><span class="tag">01</span><h2>Record the machine first</h2></div>
+  <p>This is the Windows version of the <code>defaults read</code> diff you run on the Mac. Run it now, and again after every stage.</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>.\bootstrap.ps1 -Stage Baseline</pre></div>
+  <p>It writes four files to <code>%USERPROFILE%\baseline</code>: your winget package list, your Store app list, the Explorer registry branch, and your startup entries. Compare two runs to find the exact key that a setting changed.</p>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><span class="tag">02</span><h2>Remove the apps</h2></div>
+  <p>Removal comes before installation. If you install first, you can delete something you wanted.</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>powershell.exe
+.\bootstrap.ps1 -Stage Debloat</pre></div>
+  <div class="notice stop">
+    <h3>Read before you run</h3>
+    <ul>
+      <li>Use <code>powershell.exe</code> 5.1. App removal and restore points need modules that PowerShell 7 does not have.</li>
+      <li>Do not start it from Windows Terminal if you plan to remove Windows Terminal.</li>
+      <li>Edit <code>$AppsToRemove</code> in the script to match the choices you made the first time. Get the exact names from your stage 01 <code>appx</code> file.</li>
+      <li>Keep Microsoft Store, Windows Terminal, and Edge. winget needs the Store framework.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><span class="tag">03</span><h2>Install apps and apply settings</h2></div>
+  <p>One YAML file holds every app and every registry setting. The command is idempotent: run it as often as you like, and it changes only what does not match.</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>pwsh
+.\bootstrap.ps1 -Stage Configure</pre></div>
+  <p>The stage installs the two DSC modules, validates the file, shows you the plan, then applies it. To see the plan alone:</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>winget configure show -f configuration.dsc.yaml</pre></div>
+  <div class="notice">
+    <h3>Confirm the package IDs</h3>
+    <p>Package IDs change over time. Before the first run, check each one:</p>
+    <div class="code"><button class="copy" type="button">Copy</button>
+<pre>winget search "NordVPN"
+winget search "Google Drive"</pre></div>
+    <p>If <code>winget configure</code> is not recognized, update winget from the Microsoft Store, then run <code>winget settings --enable Configuration</code>.</p>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><span class="tag">04</span><h2>Link the dotfiles</h2></div>
+  <p>Stage 03 turns on Developer Mode, which lets a normal user create symbolic links. Now point Windows at the files in the repo.</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>.\bootstrap.ps1 -Stage Dotfiles</pre></div>
+  <table>
+    <tr><th>Repo file</th><th>Linked to</th></tr>
+    <tr><td>Microsoft.PowerShell_profile.ps1</td><td>Documents\PowerShell\</td></tr>
+    <tr><td>windows-terminal-settings.json</td><td>Terminal LocalState</td></tr>
+    <tr><td>gitconfig</td><td>%USERPROFILE%\.gitconfig</td></tr>
+    <tr><td>ssh-config</td><td>%USERPROFILE%\.ssh\config</td></tr>
+  </table>
+  <p>Any existing file is renamed to <code>.bak</code> first. Use <code>-WhatIf</code> to see the plan without changing anything.</p>
+  <div class="notice stop">
+    <h3>Keys stay out of the repo</h3>
+    <p>The script links the SSH <em>config</em> only. Private keys stay in <code>%USERPROFILE%\.ssh</code>. Load them into the Windows agent once:</p>
+    <div class="code"><button class="copy" type="button">Copy</button>
+<pre>Get-Service ssh-agent | Set-Service -StartupType Automatic
+Start-Service ssh-agent
+ssh-add $env:USERPROFILE\.ssh\id_ed25519</pre></div>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><span class="tag">05</span><h2>Install WSL2</h2></div>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>.\bootstrap.ps1 -Stage WSL</pre></div>
+  <p>With no distribution name, the script lists what is available. Pick one, then:</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>.\wsl\Install-WSL.ps1 -Distro &lt;Name&gt;</pre></div>
+  <p>Open the distribution once to create your Linux user. Then restart Windows.</p>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><span class="tag">06</span><h2>Apply your Nix configuration inside WSL</h2></div>
+  <p>This is where the two repositories meet.</p>
+  <div class="code"><button class="copy" type="button">Copy</button>
+<pre>bash wsl/wsl-bootstrap.sh</pre></div>
+  <p>The script does four things: it turns on systemd in <code>/etc/wsl.conf</code>, installs Nix, clones your <code>nix-config</code> repo, and applies the <code>server</code> home-manager output.</p>
+  <div class="notice stop">
+    <h3>The systemd restart</h3>
+    <p>The Nix daemon needs systemd. The first run edits <code>/etc/wsl.conf</code> and stops. Run <code>wsl --shutdown</code> in PowerShell, reopen WSL, then run the script again.</p>
+  </div>
+  <div class="notice">
+    <h3>Two rules that decide your performance</h3>
+    <ul>
+      <li>Keep all code in the Linux <code>$HOME</code>. Never in <code>/mnt/c</code>. Metadata operations across the 9p bridge are roughly sixty times slower, and metadata is what <code>git status</code> and <code>npm install</code> do all day.</li>
+      <li>Toolchains come from <code>nix-config/templates/devshell/flake.nix</code> per project, not from a global install.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><h2>Daily use</h2></div>
+  <table>
+    <tr><th>Task</th><th>Command</th></tr>
+    <tr><td>Apply a config change</td><td><code>wapply</code></td></tr>
+    <tr><td>Preview a config change</td><td><code>winget configure show -f configuration.dsc.yaml</code></td></tr>
+    <tr><td>Update every app</td><td><code>wupdate</code></td></tr>
+    <tr><td>Add an app</td><td>Add a <code>WinGetPackage</code> block, then <code>wapply</code></td></tr>
+    <tr><td>Update the Linux side</td><td><code>home-manager switch --flake ~/.config/nix-config#server</code></td></tr>
+    <tr><td>Jump into WSL</td><td><code>dev</code></td></tr>
+  </table>
+  <p>The two layers stay separate. <code>windows-config/</code> holds the host. <code>nix-config/</code> holds everything above the operating system, on all four machines.</p>
+</div>
+
+<div class="stage">
+  <div class="stage-head"><h2>Before you commit</h2></div>
+  <ol>
+    <li>Replace <code>CHANGE ME</code> in <code>dotfiles/gitconfig</code> and <code>dotfiles/ssh-config</code>.</li>
+    <li>Replace <code>CHANGE_ME</code> in <code>wsl/wsl-bootstrap.sh</code> with your nix-config repository URL.</li>
+    <li>Replace <code>CHANGE_ME</code> in the WSL profile path in <code>windows-terminal-settings.json</code>.</li>
+    <li>Confirm the <code>.gitignore</code> blocks your key files.</li>
+  </ol>
+</div>
+
+<footer>
+  <h2 style="font-size:1rem;margin-bottom:10px">References</h2>
+  <ul>
+    <li><a href="https://learn.microsoft.com/en-us/windows/package-manager/configuration/">WinGet Configuration</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/windows/package-manager/winget/configure">winget configure command</a></li>
+    <li><a href="https://github.com/microsoft/winget-dsc">Microsoft DSC resources for WinGet</a></li>
+    <li><a href="https://github.com/Raphire/Win11Debloat">Win11Debloat</a></li>
+    <li><a href="https://github.com/nix-darwin/nix-darwin">nix-darwin</a></li>
+  </ul>
+</footer>
+
+</div>
+
+<script>
+document.querySelectorAll('.copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var text = btn.parentElement.querySelector('pre').innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      btn.textContent = 'Copied';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+    }).catch(function () {
+      btn.textContent = 'Failed';
+      setTimeout(function () { btn.textContent = 'Copy'; }, 1600);
+    });
+  });
+});
+</script>
+
+</body>
+</html>

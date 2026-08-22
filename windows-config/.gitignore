@@ -1,0 +1,13 @@
+# Repo path: .gitignore
+
+# Never commit private keys or secrets
+*.pem
+*.key
+id_*
+!id_*.pub
+.ssh/
+
+# Local machine output
+baseline/
+*.bak
+*.log

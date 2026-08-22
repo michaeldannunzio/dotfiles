@@ -1,0 +1,37 @@
+# Repo path: dotfiles\gitconfig
+# Linked to: %USERPROFILE%\.gitconfig
+#
+# Git inside WSL is separate. Home-manager configures that one.
+
+[user]
+	name = CHANGE ME
+	email = changeme@example.com
+
+[init]
+	defaultBranch = main
+
+[core]
+	# Keep LF in the repository, check out CRLF on Windows.
+	autocrlf = true
+	editor = code --wait
+	longpaths = true
+	sshCommand = C:/Windows/System32/OpenSSH/ssh.exe
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[rebase]
+	autoStash = true
+
+[diff]
+	algorithm = histogram
+
+[credential]
+	helper = manager
+
+[alias]
+	st = status -sb
+	lg = log --oneline --graph --decorate -20

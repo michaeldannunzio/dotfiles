@@ -1,0 +1,6 @@
+# Global npm packages. Installed to ~/.npm-global, so no sudo is needed.
+@anthropic-ai/claude-code
+@devcontainers/cli
+@marp-team/marp-cli
+@mermaid-js/mermaid-cli
+fx

@@ -1,0 +1,3 @@
+# Packages that need the RPM Fusion repos (enabled by install/10-repos.sh).
+ffmpeg
+libavcodec-freeworld

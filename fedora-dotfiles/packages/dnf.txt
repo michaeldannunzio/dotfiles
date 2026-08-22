@@ -1,0 +1,115 @@
+# DNF packages, one per line. Blank lines and "#" comments are ignored.
+# The installer tests each name first. It skips and logs names it cannot find.
+# To add a tool later, put its Fedora package name here and run bootstrap.sh again.
+
+### shell and core CLI
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+bash-completion
+stow
+git
+git-lfs
+git-delta
+gh
+curl
+wget
+jq
+tree
+htop
+btop
+tmux
+neovim
+vim-enhanced
+bat
+eza
+fd-find
+ripgrep
+fzf
+zoxide
+trash-cli
+man-db
+man-pages
+xz
+zstd
+unzip
+p7zip
+rsync
+ncdu
+util-linux-user
+
+### build toolchain
+gcc
+gcc-c++
+clang
+clang-tools-extra
+lld
+llvm
+gdb
+make
+cmake
+meson
+ninja-build
+autoconf
+automake
+libtool
+m4
+pkgconf-pkg-config
+patch
+redhat-rpm-config
+
+### languages and runtimes
+golang
+nodejs
+npm
+python3
+python3-pip
+python3-devel
+pipx
+lua
+luajit
+java-latest-openjdk-devel
+sqlite
+
+### networking and security
+nmap
+tcpdump
+wireshark-cli
+openssl
+gnupg2
+pinentry
+pinentry-gnome3
+openssh-clients
+mtr
+bind-utils
+
+### containers and cloud
+podman
+podman-compose
+buildah
+skopeo
+awscli2
+
+### docs, media and graphics
+graphviz
+ghostscript
+groff
+plantuml
+ImageMagick
+tesseract
+tesseract-langpack-eng
+yt-dlp
+netpbm-progs
+psutils
+poppler-utils
+pandoc
+
+### fonts
+fira-code-fonts
+google-noto-emoji-fonts
+jetbrains-mono-fonts
+
+### misc
+z3
+lsof
+strace
